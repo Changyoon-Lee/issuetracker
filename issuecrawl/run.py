@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 ##scrapy 실행하기
 
 import os
