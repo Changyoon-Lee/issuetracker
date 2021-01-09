@@ -1,0 +1,19 @@
+FROM ubuntu:latest
+MAINTAINER changyoon "lkingkongl@naver.com"
+
+RUN apt-get update \
+  && apt-get install -y python3-pip python3-dev \
+  && cd /usr/local/bin \
+  && ln -s /usr/bin/python3 python \
+  && pip3 install --upgrade pip
+RUN apt-get install -y git \
+  && apt install git
+RUN apt-get install -y cron
+
+RUN (crontab -l 2>/dev/null; echo "*/30 * * * * /home/issuetracker/issuecrawl/run.py -with args") | crontab -
+WORKDIR /home
+RUN git clone https://github.com/Changyoon-Lee/issuetracker.git
+COPY . /home/issuetracker
+WORKDIR /home/issuetracker
+RUN pip install -r requirements.txt
+
