@@ -1,10 +1,11 @@
 import scrapy
 import re
 from issuecrawl.items import IssuecrawlItem
-from datetime import datetime
+from datetime import datetime, timedelta
 from scrapy.http import HtmlResponse
 import requests
 from bs4 import BeautifulSoup
+
 class IssueSpider(scrapy.Spider):
     name = 'issue'
     # start_urls = ['https://theqoo.net/index.php?mid=hot']
@@ -14,6 +15,7 @@ class IssueSpider(scrapy.Spider):
         print('request')
         start_url = 'https://theqoo.net/index.php?mid=hot'
         i=0
+        yesDate = (datetime.now()-timedelta(days=1)).strftime('%m.%d')
         while self.chk==0 and i<8:
             i+=1
             url = start_url+'&page={}'.format(i)
@@ -21,14 +23,14 @@ class IssueSpider(scrapy.Spider):
             resp=requests.get(url)
             soup=BeautifulSoup(resp.content, 'lxml')
             a_tag = soup.select('div table tbody tr td.time')
-            if ':' not in a_tag[-1].text.strip():
+            if not (':' in a_tag[-1].text.strip() or yesDate == a_tag[-1].text.strip()):
                 self.chk=1
             # //*[@id="bd_801402415_0"]/div/table/tbody/tr[34]/td[4]
             
             
             print(i,'page'+'-'*30)
 
-            yield scrapy.Request(url=url, callback=self.parse_page)
+            yield scrapy.Request(url=url, meta={"yesDate":yesDate},callback=self.parse_page)
 
         
     def parse_page(self, response):
@@ -41,7 +43,12 @@ class IssueSpider(scrapy.Spider):
 
         for line in response.xpath('//*[@id="bd_801402415_0"]/div/table/tbody/tr'):
             index = line.xpath('td[1]/text()').extract()[0].strip()
-            if index.isdecimal() and ':' in line.xpath('td[4]/text()').extract()[0]:
+            
+            if line.xpath('td[4]/text()').extract():
+                T = line.xpath('td[4]/text()').extract()[0].strip()
+            else : T = 0
+            
+            if index.isdecimal() and (':' in T or response.meta["yesDate"] == T):
                 
                 url = 'https://theqoo.net'+line.xpath('td[3]/a/@href').extract()[0]
                 title = line.xpath('td[3]/a[1]/span/text()').extract()[0].strip()
