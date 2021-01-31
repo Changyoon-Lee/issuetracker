@@ -55,7 +55,7 @@ class IssueSpider(scrapy.Spider):
                 reply = line.xpath('td[3]/a[2]/text()').extract()[0].strip()
                 views = line.xpath('td[5]/text()').extract()[0].strip()
                 if '만' in views:
-                    views=int(views[:-1].replace('.',''))*1000 # 단위 조정
+                    views=int(float(views[:-1])*10000) # 단위 조정
                 
 
                 item = IssuecrawlItem()
