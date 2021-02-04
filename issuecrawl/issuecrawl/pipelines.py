@@ -33,7 +33,7 @@ class IssuecrawlPipeline:
         row.append(item['title'])
         row.append(item['reply'])
         row.append(item['views'])
-        
+
 
         self.csvwriter.writerow(row)
 

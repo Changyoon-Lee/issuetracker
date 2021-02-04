@@ -1,3 +1,4 @@
+import os
 # 시각화 툴관련
 from matplotlib import pyplot as plt
 import seaborn as sns
@@ -14,8 +15,14 @@ slack = Slacker('xoxb-1584555113616-1705132466806-HJgTwYmgspcgSHhcsWbOzLrb')
 import pandas as pd
 from glob import glob
 file_dir = 'data/*'
-file_list = sorted(glob(file_dir))[-2:]
 
+file_list = sorted(glob(file_dir))
+# 파일 너무 많이 쌓이지 않도록 정리
+if len(file_list)>10:
+    for i in file_list[:-10]:
+        os.remove(i)
+    
+file_list = file_list[-2:]
 def get_merged_csv(flist, **kwargs):
     return pd.concat([pd.read_csv(f, **kwargs) for f in flist], ignore_index=True)
 
