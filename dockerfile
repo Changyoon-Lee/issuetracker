@@ -9,6 +9,7 @@ RUN apt-get update \
   git \
   cron \
   vim \
+  fonts-nanum\
   && cd /usr/local/bin \
   && ln -s /usr/bin/python3 python \
   && pip3 install --upgrade pip
