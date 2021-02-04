@@ -31,8 +31,8 @@ class IssuecrawlPipeline:
         row.append(item['time'])
         row.append(item['index'])
         row.append(item['title'])
-        row.append(item['views'])
         row.append(item['reply'])
+        row.append(item['views'])
 
         self.csvwriter.writerow(row)
 
