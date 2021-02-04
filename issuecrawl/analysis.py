@@ -4,13 +4,15 @@ from matplotlib import pyplot as plt
 import seaborn as sns
 import matplotlib.font_manager as fm
 import matplotlib as mpl
+import warnings
+warnings.filterwarnings(action='ignore') # warning 안뜨게 하기
 # 유니코드 깨짐현상 해결
 mpl.rcParams['axes.unicode_minus'] = False
 # 나눔고딕 폰트 적용
 plt.rcParams["font.family"] = 'NanumGothic'
 
 from slacker import Slacker
-slack = Slacker('xoxb-1584555113616-1705132466806-akhqecHTJVQBo5sEzWlpj0XD')
+slack = Slacker('xoxb-1584555113616-1705132466806-ex3Od3eiEuXvhVT7nmZ9XqKR')
 
 import pandas as pd
 from glob import glob
@@ -45,9 +47,9 @@ df_views = df_views.dropna(subset=[df_views.columns[-2]])
 df_views = df_views[df_views.columns[-10:]]
 
 
-issue = set(df_reply[df_reply.iloc[:,-1] - df_reply.iloc[:,-2] >=50].index) &\
+issue = set(df_reply[df_reply.iloc[:,-1] - df_reply.iloc[:,-2] >=40].index) &\
 set(df_views[df_views.iloc[:,-1] - df_views.iloc[:,-2] >=4000].index) &\
-set(df_reply[df_reply.iloc[:,-2] - df_reply.iloc[:,-3] >=50].index) &\
+set(df_reply[df_reply.iloc[:,-2] - df_reply.iloc[:,-3] >=40].index) &\
 set(df_views[df_views.iloc[:,-2] - df_views.iloc[:,-3] >=4000].index)
 
 plt.figure(figsize=(14,10))
