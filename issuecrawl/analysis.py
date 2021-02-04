@@ -10,7 +10,7 @@ mpl.rcParams['axes.unicode_minus'] = False
 plt.rcParams["font.family"] = 'NanumGothic'
 
 from slacker import Slacker
-slack = Slacker('xoxb-1584555113616-1705132466806-HJgTwYmgspcgSHhcsWbOzLrb')
+slack = Slacker('xoxb-1584555113616-1705132466806-akhqecHTJVQBo5sEzWlpj0XD')
 
 import pandas as pd
 from glob import glob
@@ -21,7 +21,7 @@ file_list = sorted(glob(file_dir))
 if len(file_list)>10:
     for i in file_list[:-10]:
         os.remove(i)
-    
+print('--------------------------------')
 file_list = file_list[-2:]
 def get_merged_csv(flist, **kwargs):
     return pd.concat([pd.read_csv(f, **kwargs) for f in flist], ignore_index=True)
