@@ -49,10 +49,8 @@ df_views = df_views.dropna(subset=[df_views.columns[-2]])
 df_views = df_views[df_views.columns[-10:]]
 
 
-issue = set(df_reply[df_reply.iloc[:,-1] - df_reply.iloc[:,-2] >=40].index) &\
-set(df_views[df_views.iloc[:,-1] - df_views.iloc[:,-2] >=4000].index) &\
-set(df_reply[df_reply.iloc[:,-2] - df_reply.iloc[:,-3] >=40].index) &\
-set(df_views[df_views.iloc[:,-2] - df_views.iloc[:,-3] >=4000].index)
+issue = set(df_reply[df_reply.iloc[:,-1] - df_reply.iloc[:,-2] >=80].index) &\
+set(df_views[df_views.iloc[:,-1] - df_views.iloc[:,-2] >=8000].index)
 
 plt.figure(figsize=(14,10))
 if issue:
@@ -60,3 +58,4 @@ if issue:
     plt.savefig('image.png')
     slack.chat.post_message('issue', '\n'.join(list(issue)))
     slack.files.upload('./image.png', channels='issue')
+else :  slack.chat.post_message('issue', 'nothing')
