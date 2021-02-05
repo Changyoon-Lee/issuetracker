@@ -15,7 +15,7 @@ except SystemExit:
 
 print('analysis...')
 try:
-    execute(['python3','analysis.py'])
+    os.system('python3 analysis.py')
 except :
     print('fail to analysis')
 
