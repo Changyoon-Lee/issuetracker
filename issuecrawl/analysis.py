@@ -1,4 +1,6 @@
 import os
+import sys
+sys.stdin=open('key.txt', 'rt')
 # 시각화 툴관련
 from matplotlib import pyplot as plt
 import seaborn as sns
@@ -12,7 +14,7 @@ mpl.rcParams['axes.unicode_minus'] = False
 plt.rcParams["font.family"] = 'NanumGothic'
 
 from slacker import Slacker
-slack = Slacker('xoxb-1584555113616-1705132466806-ex3Od3eiEuXvhVT7nmZ9XqKR')
+slack = Slacker(input())
 
 import pandas as pd
 from glob import glob
